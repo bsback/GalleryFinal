@@ -527,7 +527,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
 
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         //adb.setView(Main.this);
-        adb.setTitle("Title of alert dialog");
+        adb.setTitle("是否确认删除该图片?");
         adb.setIcon(android.R.drawable.ic_dialog_alert);
         adb.setPositiveButton("删除图片", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -547,7 +547,9 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
 
     private void doDelete(){
         PhotoInfo info = mCurPhotoList.get(deletePos);
-        deleteSelect(info.getPhotoId());
+//        deleteSelect(info.getPhotoId());
+        mCurPhotoList.remove(deletePos);
+        refreshAdapter();
         File file = new File(info.getPhotoPath());
         try {
             file.delete();
