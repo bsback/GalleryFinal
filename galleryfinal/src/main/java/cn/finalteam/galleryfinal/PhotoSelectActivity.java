@@ -89,6 +89,8 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
     private boolean mHasRefreshGallery = false;
     private ArrayList<PhotoInfo> mSelectPhotoList = new ArrayList<>();
 
+    int deletePos;
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -516,9 +518,8 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         }
         return true;
     }
-    
     private void photoItemLongClick(View view, int position) {
-        PhotoInfo info = mCurPhotoList.get(position);
+        deletePos = position;
         createDialog(view);
     }
 
@@ -528,13 +529,12 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         //adb.setView(Main.this);
         adb.setTitle("Title of alert dialog");
         adb.setIcon(android.R.drawable.ic_dialog_alert);
-        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        adb.setPositiveButton("删除图片", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-
-                Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+                doDelete();
             } });
 
-        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        adb.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
                 //finish();
@@ -543,6 +543,24 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         AlertDialog alertDialog = adb.create();
         alertDialog.show();
 
+    }
+
+    private void doDelete(){
+        PhotoInfo info = mCurPhotoList.get(deletePos);
+        deleteSelect(info.getPhotoId());
+        File file = new File(info.getPhotoPath());
+        try {
+            file.delete();
+            if(file.exists()){
+                file.getCanonicalFile().delete();
+                if(file.exists()){
+                    getApplicationContext().deleteFile(file.getName());
+                }
+            }
+
+        }catch (Exception e){
+
+        }
     }
 
     @Override
