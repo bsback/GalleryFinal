@@ -516,6 +516,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         }
         return true;
     }
+    
     private void photoItemLongClick(View view, int position) {
         PhotoInfo info = mCurPhotoList.get(position);
         createDialog(view);
