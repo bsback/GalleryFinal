@@ -17,6 +17,8 @@
 package cn.finalteam.galleryfinal;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,7 +58,7 @@ import cn.finalteam.toolsfinal.io.FilenameUtils;
  * Author:pengjianbo
  * Date:15/10/10 下午3:54
  */
-public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
+public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener,AdapterView.OnItemLongClickListener{
 
     private final int HANLDER_TAKE_PHOTO_EVENT = 1000;
     private final int HANDLER_REFRESH_LIST_EVENT = 1002;
@@ -230,6 +233,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         mFabOk.setOnClickListener(this);
         mIvClear.setOnClickListener(this);
         mIvPreView.setOnClickListener(this);
+        mGvPhotoList.setOnItemLongClickListener(this);
     }
 
     protected void deleteSelect(int photoId) {
@@ -501,6 +505,44 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         } else {
             mIvPreView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        int parentId = parent.getId();
+        if ( parentId == R.id.lv_folder_list ) {
+            return false;
+        } else {
+            photoItemLongClick(view, position);
+        }
+        return false;
+    }
+    private void photoItemLongClick(View view, int position) {
+        PhotoInfo info = mCurPhotoList.get(position);
+        createDialog(view);
+    }
+
+    public void createDialog(View view){
+
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        //adb.setView(Main.this);
+        adb.setTitle("Title of alert dialog");
+        adb.setIcon(android.R.drawable.ic_dialog_alert);
+        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
+            } });
+
+        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
+                //finish();
+            } });
+
+        AlertDialog alertDialog = adb.create();
+        alertDialog.show();
+
     }
 
     @Override
