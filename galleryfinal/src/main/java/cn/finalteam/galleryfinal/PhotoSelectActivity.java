@@ -511,7 +511,6 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         int parentId = parent.getId();
         if ( parentId == R.id.lv_folder_list ) {
-            return false;
         } else {
             photoItemLongClick(view, position);
         }
