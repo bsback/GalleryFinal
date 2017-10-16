@@ -43,8 +43,6 @@ public class PhotoTools {
      */
     public static List<PhotoFolderInfo> getAllPhotoFolder(Context context, List<PhotoInfo> selectPhotoMap) {
         List<PhotoFolderInfo> allFolderList = new ArrayList<>();
-
-        /*
         final String[] projectionPhotos = {
                 MediaStore.Images.Media._ID,
                 MediaStore.Images.Media.BUCKET_ID,
@@ -66,8 +64,13 @@ public class PhotoTools {
         List<String> selectedList = GalleryFinal.getFunctionConfig().getSelectedList();
         List<String> filterList = GalleryFinal.getFunctionConfig().getFilterList();
         try {
+//            cursor = MediaStore.Images.Media.query(context.getContentResolver(), MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+//                    , projectionPhotos, "", null, MediaStore.Images.Media.DATE_TAKEN + " DESC");
+
             cursor = MediaStore.Images.Media.query(context.getContentResolver(), MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    , projectionPhotos, "", null, MediaStore.Images.Media.DATE_TAKEN + " DESC");
+                    , projectionPhotos,  MediaStore.Images.Media.DATA + " like ? ",
+                    new String[] {"%XiaoPeng%"}, MediaStore.Images.Media.DATE_TAKEN + " DESC");
+
             if (cursor != null) {
                 int bucketNameColumn = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
                 final int bucketIdColumn = cursor.getColumnIndex(MediaStore.Images.Media.BUCKET_ID);
@@ -123,8 +126,6 @@ public class PhotoTools {
         if (selectedList != null) {
             selectedList.clear();
         }
-
-        */
         return allFolderList;
     }
 }
