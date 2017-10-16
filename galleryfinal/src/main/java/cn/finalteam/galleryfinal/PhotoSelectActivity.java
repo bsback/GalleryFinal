@@ -115,7 +115,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
                 refreshSelectCount();
                 mPhotoListAdapter.notifyDataSetChanged();
                 mFolderListAdapter.notifyDataSetChanged();
-                if (mAllPhotoFolderList.get(0).getPhotoList() == null ||
+                if (mAllPhotoFolderList==null || mAllPhotoFolderList.size()==0 ||  mAllPhotoFolderList.get(0).getPhotoList() == null ||
                         mAllPhotoFolderList.get(0).getPhotoList().size() == 0) {
                     mTvEmptyView.setText(R.string.no_photo);
                 }
