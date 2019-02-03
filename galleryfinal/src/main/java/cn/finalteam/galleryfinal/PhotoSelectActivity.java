@@ -577,7 +577,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
 
         adb.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
                 //finish();
             } });
 
@@ -668,6 +668,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     @Override
     protected void onResume() {
