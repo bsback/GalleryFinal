@@ -396,9 +396,10 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
                 }
             }
         } else if ( id == R.id.iv_clear ) {
-            mSelectPhotoList.clear();
-            mPhotoListAdapter.notifyDataSetChanged();
-            refreshSelectCount();
+//            mSelectPhotoList.clear();
+//            mPhotoListAdapter.notifyDataSetChanged();
+//            refreshSelectCount();
+            deleteSelectionClicked();
         } else if ( id == R.id.iv_preview ) {
             Intent intent = new Intent(this, PhotoPreviewActivity.class);
             intent.putExtra(PhotoPreviewActivity.PHOTO_LIST, mSelectPhotoList);
@@ -536,8 +537,6 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
 
         adb.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
-                //finish();
             } });
 
         AlertDialog alertDialog = adb.create();
@@ -563,6 +562,49 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         }catch (Exception e){
 
         }
+    }
+
+    private deleteSelectionClicked(){
+
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        //adb.setView(Main.this);
+        adb.setTitle("是否确认删除所有选中的图片?");
+        adb.setIcon(android.R.drawable.ic_dialog_alert);
+        adb.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                doDeleteSelection();
+            } });
+
+        adb.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
+                //finish();
+            } });
+
+        AlertDialog alertDialog = adb.create();
+        alertDialog.show();
+    }
+
+    private doDeleteSelection(){
+        for(Iterator<PhotoInfo> iterator = mSelectPhotoList.iterator();iterator.hasNext();){
+            PhotoInfo info = iterator.next();
+            File file = new File(info.getPhotoPath());
+            try {
+                file.delete();
+                if(file.exists()){
+                    file.getCanonicalFile().delete();
+                    if(file.exists()){
+                        getApplicationContext().deleteFile(file.getName());
+                    }
+                }
+
+            }catch (Exception e){
+
+            }
+        }
+        mSelectPhotoList.clear();
+        mPhotoListAdapter.notifyDataSetChanged();
+        refreshSelectCount();
     }
 
     @Override
