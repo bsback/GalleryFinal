@@ -564,7 +564,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         }
     }
 
-    private deleteSelectionClicked(){
+    private void deleteSelectionClicked(){
 
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         //adb.setView(Main.this);
@@ -585,7 +585,7 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         alertDialog.show();
     }
 
-    private doDeleteSelection(){
+    private void doDeleteSelection(){
         for(Iterator<PhotoInfo> iterator = mSelectPhotoList.iterator();iterator.hasNext();){
             PhotoInfo info = iterator.next();
             File file = new File(info.getPhotoPath());
