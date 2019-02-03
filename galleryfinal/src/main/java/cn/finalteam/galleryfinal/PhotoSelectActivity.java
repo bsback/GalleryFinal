@@ -598,11 +598,13 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
                     }
                 }
 
-                iterator.remove();
+//                iterator.remove();
             }catch (Exception e){
 
             }
         }
+        mCurPhotoList.removeAll(mSelectPhotoList);
+
         mSelectPhotoList.clear();
         mPhotoListAdapter.notifyDataSetChanged();
         refreshSelectCount();
