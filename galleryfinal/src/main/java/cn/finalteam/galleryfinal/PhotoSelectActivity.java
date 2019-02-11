@@ -637,7 +637,8 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
     }
 
     private void getPhotos() {
-        mTvEmptyView.setText(R.string.waiting);
+//        mTvEmptyView.setText(R.string.waiting);
+        mTvEmptyView.setText("");
         mGvPhotoList.setEnabled(false);
         mLlTitle.setEnabled(false);
         mIvTakePhoto.setEnabled(false);
