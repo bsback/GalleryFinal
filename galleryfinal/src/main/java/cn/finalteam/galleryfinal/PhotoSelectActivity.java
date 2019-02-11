@@ -609,6 +609,8 @@ public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnCli
         mPhotoListAdapter.notifyDataSetChanged();
         refreshSelectCount();
         refreshAdapter();
+
+        getPhotos();
     }
 
     @Override
